@@ -1,4 +1,4 @@
-# Machine_Learning
+# Machine Learning
 Developed projects in the Machine Learning and Big Data subject. Python is the programming language used in them
 
 ## Práctica 0: Python
