@@ -54,7 +54,7 @@ def checkNNGradients(costNN, reg_param):
     hidden_layer_size = 5
     num_labels = 3
     m = 5
-
+    
     # Generate some random test data
     Theta1 = debugInitializeWeights(hidden_layer_size, input_layer_size)
     Theta2 = debugInitializeWeights(num_labels, hidden_layer_size)
