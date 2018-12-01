@@ -8,7 +8,7 @@ Developed projects in the Machine Learning and Big Data subject. Python is the p
 
 
 
-# Prácticas realizadas
+# Prácticas Realizadas
 
 ## Práctica 0: Python
 * [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica0/p0.pdf)
