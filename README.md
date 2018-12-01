@@ -3,6 +3,12 @@
 </p>
 Developed projects in the Machine Learning and Big Data subject. Python is the programming language used in them
 
+
+# Proyecto final
+
+
+# Prácticas realizadas
+
 ## Práctica 0: Python
 * [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica0/p0.pdf)
 
@@ -29,5 +35,3 @@ Developed projects in the Machine Learning and Big Data subject. Python is the p
 ## Práctica 6: Support Vector Machines
 * [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica6/p6.pdf)
 * [Archivos necesarios](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica6/p6.zip)
-
-## Proyecto Final
