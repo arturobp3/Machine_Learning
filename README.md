@@ -5,7 +5,7 @@ Developed projects in the Machine Learning and Big Data subject. Python is the p
 
 
 # Proyecto Final
-
+(Aquí irá una explicación, el enunciado si es que hay y archivos utilizados)
 
 
 # Prácticas Realizadas
