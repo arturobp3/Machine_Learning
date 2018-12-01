@@ -1,7 +1,7 @@
 <p align="center">
   <img alt="Machine Learning" src="https://github.com/arturobp3/Machine_Learning/blob/master/docs/ml.png">
 </p>
-Developed projects in the Machine Learning and Big Data subject. Python is the programming language used in them
+Projects that has been developed in the Machine Learning and Big Data university subject. Python is the programming language used in them.
 
 
 # Proyecto Final
