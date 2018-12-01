@@ -1,4 +1,6 @@
-# Machine Learning
+<p align="center">
+  <img alt="Machine Learning" src="https://github.com/arturobp3/Machine_Learning/blob/master/docs/ml.png">
+</p>
 Developed projects in the Machine Learning and Big Data subject. Python is the programming language used in them
 
 ## Práctica 0: Python
