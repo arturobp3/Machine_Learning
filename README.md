@@ -19,3 +19,13 @@ Developed projects in the Machine Learning and Big Data subject. Python is the p
 ## Práctica 4: Entrenamiento de Redes Neuronales
 * [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica4/p4.pdf)
 * [Archivos necesarios](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica4/p4.zip)
+
+## Práctica 5: Regresión lineal regularizada: Sesgo y Varianza
+* [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica5/p5.pdf)
+* [Archivos necesarios](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica5/ex5data1.mat)
+
+## Práctica 6: Support Vector Machines
+* [Enunciado](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica6/p6.pdf)
+* [Archivos necesarios](https://github.com/arturobp3/Machine_Learning/blob/master/docs/practica6/p6.zip)
+
+## Proyecto Final
