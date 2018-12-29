@@ -1,0 +1,873 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Practica 6}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{quote}
+\textbf{Alumnos}: \emph{Adrián Ogáyar Sanchez y Arturo Barbero Pérez}
+\end{quote}
+
+\begin{quote}
+\textbf{Grupo}: \emph{11}
+\end{quote}
+
+    \section{Support Vector Machines}\label{support-vector-machines}
+
+    El objetivo de la primera parte de la práctica es familiarizarse con el
+uso del clasificador SVM que incorpora scikit-learn, para luego
+aplicarlo en la segunda parte de la práctica.
+
+    Comenzamos importando las librerías necesarias. Todas ellas han sido
+utilizadas y explicadas en prácticas anteriores, salvo \textbf{SVM} de
+\textbf{SciKit-Learn} que es el módulo que incorpora todos los
+algoritmos necesarios para las Support Vector Machines.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{io} \PY{k}{import} \PY{n}{loadmat}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{svm} \PY{k}{as} \PY{n+nn}{svm}
+\end{Verbatim}
+
+
+    \subsection{Kernel Lineal}\label{kernel-lineal}
+
+    Continuamos cargando los datos del fichero ex6data1.mat, ex6data2.mat y
+ex6data3.mat. Este fichero contiene una serie de datos de entrenamiento
+y datos de validación necesarios para la realización del apartado 1.3
+que veremos posteriormente.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{datos1} \PY{o}{=} \PY{n}{loadmat}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ex6data1.mat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{datos2} \PY{o}{=} \PY{n}{loadmat}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ex6data2.mat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{datos3} \PY{o}{=} \PY{n}{loadmat}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ex6data3.mat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{datos1\PYZus{}x} \PY{o}{=} \PY{n}{datos1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{datos1\PYZus{}y} \PY{o}{=} \PY{n}{datos1}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos1\PYZus{}y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        
+        \PY{n}{datos2\PYZus{}x} \PY{o}{=} \PY{n}{datos2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{datos2\PYZus{}y} \PY{o}{=} \PY{n}{datos2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos2\PYZus{}x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos2\PYZus{}y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        
+        \PY{n}{datos3\PYZus{}x} \PY{o}{=} \PY{n}{datos3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{datos3\PYZus{}y} \PY{o}{=} \PY{n}{datos3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos3\PYZus{}x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{datos3\PYZus{}y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        
+        \PY{n}{xval} \PY{o}{=} \PY{n}{datos3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Xval}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{yval} \PY{o}{=} \PY{n}{datos3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yval}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{xval}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{yval}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(51, 2)
+(51, 1)
+(863, 2)
+(863, 1)
+(211, 2)
+(211, 1)
+(200, 2)
+(200, 1)
+
+    \end{Verbatim}
+
+    Definimos una función que se va a encargar de realizar un gráfico para
+poder visualizar los datos. Esta función recibe la componente 'X' y la
+clasificacion 'y'.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{graficaDatos}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+            
+            \PY{n}{pos} \PY{o}{=} \PY{p}{(}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+            \PY{n}{neg} \PY{o}{=} \PY{p}{(}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{n}{pos}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{n}{pos}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{n}{neg}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{n}{neg}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yellow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{k}{return}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{graficaDatos}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{p}{,} \PY{n}{datos1\PYZus{}y}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    La clase \emph{sklearn.svm.SVC} instancia un clasificador SVM utilizando
+el parámetro C de regularización y aplicando una función de kernel
+\emph{kernel}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{p}{,} \PY{n}{datos1\PYZus{}y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} SVC(C=1.0, cache\_size=200, class\_weight=None, coef0=0.0,
+          decision\_function\_shape='ovr', degree=3, gamma='auto', kernel='linear',
+          max\_iter=-1, probability=False, random\_state=None, shrinking=True,
+          tol=0.001, verbose=False)
+\end{Verbatim}
+            
+    Creamos una función que recibe el clasificador previamente entrenado y
+los datos de entrada. Este método se encarga de crear unas coordenadas
+que van desde los mínimos hasta los máximos de 'x' y realiza una
+predicción sobre estos datos. Devuelve las coordenadas y las
+predicciones realizadas.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{generarSeparacion}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        
+            \PY{n}{x1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+            \PY{n}{x2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+            \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{)}
+            
+            \PY{n}{yp} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{x1}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{x2}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{x1}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            
+            \PY{k}{return} \PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp} \PY{o}{=} \PY{n}{generarSeparacion}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{datos1\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    Definiremos también una función encargada de completar la gráfica creada
+con \emph{graficaDatos}. La completa añadiendo la frontera de decisión a
+esta.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{graficaSeparacion}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}\PY{p}{:}
+            
+            \PY{n}{graficaDatos}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{contour}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+            
+            \PY{k}{return}
+\end{Verbatim}
+
+
+    \subsubsection{Resultado obtenido con C =
+1}\label{resultado-obtenido-con-c-1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{graficaSeparacion}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{p}{,} \PY{n}{datos1\PYZus{}y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Resultado obtenido con C =
+100}\label{resultado-obtenido-con-c-100}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+         
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{p}{,} \PY{n}{datos1\PYZus{}y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp} \PY{o}{=} \PY{n}{generarSeparacion}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{datos1\PYZus{}x}\PY{p}{)}
+         
+         \PY{n}{graficaSeparacion}\PY{p}{(}\PY{n}{datos1\PYZus{}x}\PY{p}{,} \PY{n}{datos1\PYZus{}y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Como podemos observar en las gráficas, el parámetro C funciona de manera
+contraria al parámetro \(\lambda\) de las prácticas anteriores. Cuanto
+mayor es C, realiza una mejor separación entre los dos grupos de datos
+que tenemos, es decir, consigue que haya un menor \emph{underfitting} y
+un mayor \emph{overfitting} a los datos. Sin embargo, cuanto menor es C,
+consigue que haya un mayor \emph{underfitting} y un menor
+\emph{overfitting}
+
+    \subsection{Kernel Gaussiano}\label{kernel-gaussiano}
+
+    A continuación utilizamos un kernel gaussiano para poder entrenar una
+SVM que clasifique correctamente el segundo conjunto de datos.
+Realizamos un proceso parecido al anterior, pero con los parametros:
+\emph{kernel} = 'rbf' (equivalente a Gaussiano), \emph{C} = 1,
+\emph{gamma}= 1 / (2\emph{sigma\^{}2)}, donde \emph{sigma} = 0.1
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{l+m+mf}{0.1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{datos2\PYZus{}x}\PY{p}{,} \PY{n}{datos2\PYZus{}y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp} \PY{o}{=} \PY{n}{generarSeparacion}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{datos2\PYZus{}x}\PY{p}{)}
+         
+         \PY{n}{graficaSeparacion}\PY{p}{(}\PY{n}{datos2\PYZus{}x}\PY{p}{,} \PY{n}{datos2\PYZus{}y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{\texorpdfstring{Elección de los parámetros \(C\) y
+\(\sigma\)}{Elección de los parámetros C y \textbackslash{}sigma}}\label{elecciuxf3n-de-los-paruxe1metros-c-y-sigma}
+
+    En este caso tenemos que seleccionar los valores \(C\) y \(\sigma\) para
+el conjunto de datos de \emph{ex6data3.mat}. Teniendo en este caso unos
+valores de validacion \emph{Xval} e \emph{yval}.
+
+Para obtener los mejores valores de \(C\) y \(\sigma\) crearemos una
+función \textbf{\emph{ajustarPorcentaje}} que reciba 2 vectores con los
+posibles valores de \(C\) y de \(\sigma\). Esta buscará la svm generada
+con los subconjuntos de estos parametros que tenga el mayor porcentaje
+de acierto respecto a los valores de validación, devolviendo una tupla
+\((C,\sigma)\) con los parametros ajustados.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{ajustarPorcentaje}\PY{p}{(}\PY{n}{C}\PY{p}{,} \PY{n}{Sigma}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{)} \PY{p}{:}
+             \PY{n}{mejorP} \PY{o}{=} \PY{l+m+mi}{0}
+             
+             \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{C} \PY{p}{:}
+                 \PY{k}{for} \PY{n}{sigma} \PY{o+ow}{in} \PY{n}{Sigma} \PY{p}{:}
+                     \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{c}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{sigma}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+                     \PY{n}{porcent} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{)}
+                     
+                     \PY{k}{if}\PY{p}{(}\PY{n}{mejorP} \PY{o}{\PYZlt{}} \PY{n}{porcent}\PY{p}{)} \PY{p}{:}
+                         \PY{n}{mejorP} \PY{o}{=} \PY{n}{porcent}
+                         \PY{n}{tup} \PY{o}{=} \PY{p}{(}\PY{n}{c}\PY{p}{,}\PY{n}{sigma}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{tup}
+\end{Verbatim}
+
+
+    En este caso generamos un sólo vector que usaremos en ambos parámetros.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.01}\PY{p}{,}\PY{l+m+mf}{0.03}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ajustado} \PY{o}{=} \PY{n}{ajustarPorcentaje}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{datos3\PYZus{}x}\PY{p}{,} \PY{n}{datos3\PYZus{}y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{ajustado}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(1.0, 0.1)
+
+    \end{Verbatim}
+
+    Finalmente mostramos la gráfica obtenida para comprobar que el resultado
+se ajusta a los valores deseados.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{ajustado}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{ajustado}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{datos3\PYZus{}x}\PY{p}{,} \PY{n}{datos3\PYZus{}y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp} \PY{o}{=} \PY{n}{generarSeparacion}\PY{p}{(}\PY{n}{clf}\PY{p}{,} \PY{n}{datos3\PYZus{}x}\PY{p}{)}
+         
+         \PY{n}{graficaSeparacion}\PY{p}{(}\PY{n}{datos3\PYZus{}x}\PY{p}{,} \PY{n}{datos3\PYZus{}y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{yp}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Detección de spam}\label{detecciuxf3n-de-spam}
+
+    En esta segunda parte de la práctica utilizaremos las funciones para el
+cálculo de modelos SVM que hemos probado en la primera parte para llevar
+a cabo experimentos en la detección de correo spam.
+
+Con la práctica se proporcionan conjuntos de datos de correo spam
+(spam.zip) y no spam (easy\_ham.zip, más fáciles de identificar como
+correo no spam, y hard\_ham.zip más fáciles de confundir con spam)
+extraídos del SpamAssassin Public Corpus, y nuestro objetivo será
+utilizarlos de la manera que creas más conveniente para generar y
+evaluar modelos SVM que detecten el spam.
+
+Además, con la práctica se incluye la función \emph{email2TokenList} en
+el archivo process\_email.py que se encarga de limpiar el correo,
+devolviendo únicamente las palabras del mensaje, todas ellas en una
+lista. También se nos proporciona La función \emph{getVocabDict} que se
+encarga de leer el fichero vocab.txt y devolver su contenido como un
+diccionario de python. Este fichero contiene las palabras que aparecen
+repetidas en los mensajes al menos 100 veces.
+
+    Pasamos, por tanto, a importar las librerias necesarias para el
+desarrollo de esta parte de la práctica.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k+kn}{import} \PY{n+nn}{codecs}
+         \PY{k+kn}{import} \PY{n+nn}{get\PYZus{}vocab\PYZus{}dict} \PY{k}{as} \PY{n+nn}{vocabDic}
+         \PY{k+kn}{import} \PY{n+nn}{process\PYZus{}email} \PY{k}{as} \PY{n+nn}{procEm}
+         \PY{k+kn}{import} \PY{n+nn}{random}
+\end{Verbatim}
+
+
+    Creamos una lista, que utilizaremos a modo de constante, en la que cada
+posición contiene el número de correos que tenemos disponibles para
+realizar el entrenamiento. Disponemos de: 500 correos que son Spam, 2551
+que no lo son y 250 que se pueden confundir fácilmente con spam.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Spam / Easy / Hard}
+         \PY{n}{correos} \PY{o}{=} \PY{p}{[} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{2551}\PY{p}{,} \PY{l+m+mi}{250} \PY{p}{]}
+\end{Verbatim}
+
+
+    Además, crearemos una matriz en la que cada fila corresponde con una
+configuración que indica el porcentaje de cada tipo de email que
+utilizaremos para el conjunto de datos de validación. Por ejemplo, la
+primera fila indicaría que queremos coger para los datos de validación:
+un 10\% de spam, un 10\% de Easy y un 10\% de Hard. Los sobrantes se
+dejarán para entrenar el sistema.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{}Porcentajes para:}
+         \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+         \PY{c+c1}{\PYZsh{} Spam / Easy / Hard}
+         \PY{n}{porcentajes} \PY{o}{=} \PY{p}{[} 
+             \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{,} 
+             \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{,} 
+             \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]} 
+         \PY{p}{]} \PY{c+c1}{\PYZsh{} Aqui podremos ir poniendo las configuraciones según queramos}
+\end{Verbatim}
+
+
+    Definimos e implementamos una función la cual va a calcular el
+porcentaje respecto de dos números. Nos vendrá bien cuando queramos
+procesar un directorio y saber cuantos correos obtenemos para
+validación.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{calcPorc}\PY{p}{(}\PY{n}{n1}\PY{p}{,} \PY{n}{n2}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{(}\PY{n}{n1} \PY{o}{*} \PY{n}{n2}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{100}
+\end{Verbatim}
+
+
+    Para poder procesar todos los emails, hemos creado una función que se
+encargue de procesar un directorio, para poder llamarla multiples veces
+posteriormente. Esta función recibe unas listas (pertenecientes al
+entrenamiento, y a la validación), el diccionario, el directorio de
+donde queremos procesar los correos, el número de archivos que tiene
+este directorio, el porcentaje de correos que queremos dejar para
+validación, y por último, un booleano que indica si el directorio tiene
+correos spam o no. Hemos tomado la decisión de que un '1' indica que es
+spam, y un '0' que no lo es.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} 1\PYZhy{} Spam / 0 \PYZhy{} No Spam}
+         \PY{k}{def} \PY{n+nf}{procesarDirec}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{dicc}\PY{p}{,} \PY{n}{directorio}\PY{p}{,} \PY{n}{nArchivos}\PY{p}{,} \PY{n}{porc}\PY{p}{,} \PY{n}{spamBool}\PY{p}{)}\PY{p}{:}
+             
+             \PY{c+c1}{\PYZsh{}Creamos una secuencia de enteros distintos aleatorios en un intervalo [0, 1898]. Si la iteracion en la}
+             \PY{c+c1}{\PYZsh{}que estamos coincide con algun numero de esta secuencia, ese correo se toma como validacion}
+             \PY{n}{set\PYZus{}} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{nArchivos}\PY{o}{+}\PY{l+m+mi}{1} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{sec} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{set\PYZus{}}\PY{p}{,} \PY{n}{k}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{porc}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{nArchivos} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{p}{:}
+                 \PY{n}{email\PYZus{}contents} \PY{o}{=} \PY{n}{codecs}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{/}\PY{l+s+si}{\PYZob{}1:04d\PYZcb{}}\PY{l+s+s1}{.txt}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{directorio}\PY{p}{,} \PY{n}{i}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{errors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{email} \PY{o}{=} \PY{n}{procEm}\PY{o}{.}\PY{n}{email2TokenList}\PY{p}{(}\PY{n}{email\PYZus{}contents}\PY{p}{)}
+                 \PY{n}{email} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{email}\PY{p}{)}
+                 
+                 \PY{n}{resultado} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{elem} \PY{o+ow}{in} \PY{n}{email} \PY{k}{else} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{elem} \PY{o+ow}{in} \PY{n}{dicc}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+                 
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o+ow}{in} \PY{n}{sec}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{xVal} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{resultado}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{yVal} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{yVal}\PY{p}{,} \PY{n}{spamBool}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{xTrain} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{resultado}\PY{p}{)}\PY{p}{)}
+                     \PY{n}{yTrain} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{yTrain}\PY{p}{,} \PY{n}{spamBool}\PY{p}{)}\PY{p}{)}
+                     
+             
+             \PY{k}{return} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}  
+\end{Verbatim}
+
+
+    Implementamos la función para procesar los emails. En ella se crean las
+listas que van a contener los datos de entrenamiento y validación.
+Además llamamos a \emph{procesarDirec} con los argumentos necesarios
+para obtener el contenido de los correos de cada directorio.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{}Config es el indice de la configuracion de porcentajes que queremos probar}
+         \PY{k}{def} \PY{n+nf}{procesarEmails}\PY{p}{(}\PY{n}{porc}\PY{p}{,} \PY{n}{config}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{dicc} \PY{o}{=} \PY{n}{vocabDic}\PY{o}{.}\PY{n}{getVocabDict}\PY{p}{(}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{}Cada fila es un correo codificado en 1\PYZsq{}s o 0\PYZsq{}s. Cada columna de booleanos indica si la palabra}
+             \PY{c+c1}{\PYZsh{}correspondiente del diccionario, está en el correo o no.}
+             \PY{n}{xTrain} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{dicc}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{yTrain} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{xVal} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{dicc}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{yVal} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             
+         
+             \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{procesarDirec}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{dicc}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+                                                        \PY{n}{calcPorc}\PY{p}{(}\PY{n}{porc}\PY{p}{[}\PY{n}{config}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+             
+             \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{procesarDirec}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{dicc}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{easy\PYZus{}ham}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                                                        \PY{n}{calcPorc}\PY{p}{(}\PY{n}{porc}\PY{p}{[}\PY{n}{config}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+             
+             \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{procesarDirec}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{dicc}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hard\PYZus{}ham}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}
+                                                        \PY{n}{calcPorc}\PY{p}{(}\PY{n}{porc}\PY{p}{[}\PY{n}{config}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{correos}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+             
+             
+             \PY{k}{return} \PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+\end{Verbatim}
+
+
+    Como podemos observar obtenemos los distintos tipos de datos. Hemos
+llamado a procesar emails con indicando que queremos la primera
+configuración de porcentajes para probar la funcionalidad de este
+método.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{procesarEmails}\PY{p}{(}\PY{n}{porcentajes}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{xTrain}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{yTrain}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{xVal}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{yVal}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(2971, 1899)
+(2971, 1)
+(330, 1899)
+(330, 1)
+
+    \end{Verbatim}
+
+    Para comprobar que todo ha ido según lo esperado comprobaremos que
+seguimos teniendo el mismo números de correos al hacer la separación.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{correos}\PY{p}{)} \PY{o}{==} \PY{p}{(}\PY{n}{xTrain}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{xVal}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} True
+\end{Verbatim}
+            
+    Una vez tenemos los datos separados, tenemos que encontrar los valores
+\(C\) y \(\sigma\) óptimos necesarios para entrenar al sistema.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{ajuste} \PY{o}{=} \PY{n}{ajustarPorcentaje}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ajuste}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        KeyboardInterrupt                         Traceback (most recent call last)
+
+        <ipython-input-25-94c8bd4baeaf> in <module>()
+    ----> 1 ajuste = ajustarPorcentaje(m, m, xTrain, yTrain.ravel(), xVal, yVal.ravel())
+          2 ajuste
+    
+
+        <ipython-input-12-cc394092cac6> in ajustarPorcentaje(C, Sigma, x, y, xval, yval)
+          5         for sigma in Sigma :
+          6             clf = svm.SVC(kernel='rbf', C=c, gamma=1/(2*sigma**2))
+    ----> 7             clf.fit(x, y)
+          8             porcent = clf.score(xval, yval)
+          9 
+    
+
+        \textasciitilde{}\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}svm\textbackslash{}base.py in fit(self, X, y, sample\_weight)
+        185 
+        186         seed = rnd.randint(np.iinfo('i').max)
+    --> 187         fit(X, y, sample\_weight, solver\_type, kernel, random\_seed=seed)
+        188         \# see comment on the other call to np.iinfo in this file
+        189 
+    
+
+        \textasciitilde{}\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}svm\textbackslash{}base.py in \_dense\_fit(self, X, y, sample\_weight, solver\_type, kernel, random\_seed)
+        252                 cache\_size=self.cache\_size, coef0=self.coef0,
+        253                 gamma=self.\_gamma, epsilon=self.epsilon,
+    --> 254                 max\_iter=self.max\_iter, random\_seed=random\_seed)
+        255 
+        256         self.\_warn\_from\_fit\_status()
+    
+
+        KeyboardInterrupt: 
+
+    \end{Verbatim}
+
+    Y una vez los tenemos, entrenamos al sistema y obtenemos el porcentaje
+de acierto obtenido, evaluando el sistema con los datos de validación.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+\end{Verbatim}
+
+
+    Como vemos, es un porcentaje bastante bueno. Una vez comprobamos que
+para un caso funciona bien, pasamos a crear un bucle que itere por la
+lista de porcentajes, para encontrar la configuración que sea óptima
+para nuestro sistema.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k}{def} \PY{n+nf}{iterPorcentajes}\PY{p}{(}\PY{n}{porc}\PY{p}{)}\PY{p}{:}    
+             \PY{n}{mejorP} \PY{o}{=} \PY{l+m+mi}{0}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{porc}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{procesarEmails}\PY{p}{(}\PY{n}{porc}\PY{p}{,} \PY{n}{i}\PY{p}{)}
+                 \PY{n}{ajuste} \PY{o}{=} \PY{n}{ajustarPorcentaje}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 
+                 \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{porcent} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+                 
+                 \PY{k}{if}\PY{p}{(}\PY{n}{mejorP} \PY{o}{\PYZlt{}} \PY{n}{porcent}\PY{p}{)} \PY{p}{:}
+                     \PY{n}{mejorP} \PY{o}{=} \PY{n}{porcent}
+                     \PY{n}{bestConfig} \PY{o}{=} \PY{p}{(}\PY{n}{ajuste}\PY{p}{,} \PY{n}{i}\PY{p}{)}
+                     \PY{n}{bestValues} \PY{o}{=} \PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+             
+             
+             \PY{k}{return} \PY{p}{(}\PY{n}{bestValues}\PY{p}{,} \PY{n}{bestConfig}\PY{p}{)}
+\end{Verbatim}
+
+
+    Esta función devuelve en \emph{bestConfig} la configuración de
+porcentajes utilizada y los valores de \(C\) y \(\sigma\) adecuados para
+el entrenamiento de los datos. Además, devolvemos los datos de
+entrenamiento y validación utilizados para ese porcentaje, ya que en el
+procesamiento de los emails, los correos que vamos a usar para validar
+se eligen de manera aleatoria, por lo que con cada ejecución estos datos
+varían.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{bestV}\PY{p}{,} \PY{n}{bestC} \PY{o}{=} \PY{n}{iterPorcentajes}\PY{p}{(}\PY{n}{porcentajes}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{bestV}
+        \PY{n}{ajuste} \PY{o}{=} \PY{n}{bestC}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    Volvemos a entrenar el sistema con los datos de entrenamiento y
+validación óptimos para calcular el porcentaje de acierto que obtenemos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{ajuste}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+\end{Verbatim}
+
+
+    Como vemos, es un porcentaje de acierto bastante bueno. La configuración
+de porcentajes que ha ayudado a obtener este resultado es la siguiente:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{porcentajes}\PY{p}{[}\PY{n}{bestC}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
