@@ -65,7 +65,6 @@
     \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
     \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
                                 % normalem makes italics be italics, not underlines
-    \usepackage{mathrsfs}
     
 
     
@@ -92,8 +91,6 @@
     \definecolor{ansi-cyan-intense}{HTML}{258F8F}
     \definecolor{ansi-white}{HTML}{C5C1B4}
     \definecolor{ansi-white-intense}{HTML}{A1A6B2}
-    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
-    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
 
     % commands and environments needed by pandoc snippets
     % extracted from the output of `pandoc -s`
@@ -140,18 +137,11 @@
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
-    % Math Jax compatibility definitions
+    % Math Jax compatability definitions
     \def\gt{>}
     \def\lt{<}
-    \let\Oldtex\TeX
-    \let\Oldlatex\LaTeX
-    \renewcommand{\TeX}{\textrm{\Oldtex}}
-    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
-    % Document title
     \title{Credit Approval}
-    
-    
     
     
     
@@ -386,28 +376,31 @@ datos. Por último, añadimos \textbf{Optimize} que nos permitiría
 entrenar nuestros modelos.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
         \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k}{as} \PY{n+nn}{opt}
 \end{Verbatim}
 
+
     \section{VISUALIZACIÓN DE LOS
 DATOS}\label{visualizaciuxf3n-de-los-datos}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{target\PYZus{}url} \PY{o}{=} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://archive.ics.uci.edu/ml/machine\PYZhy{}learning\PYZhy{}databases}\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}
-                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/credit\PYZhy{}screening/crx.data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n}{header} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A4}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A5}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A6}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
-                   \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A7}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A9}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A10}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A11}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A12}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A13}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A14}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A15}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A16}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
-         \PY{n}{types} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float64}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
-         \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{target\PYZus{}url}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n}{header}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{target\PYZus{}url} \PY{o}{=} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://archive.ics.uci.edu/ml/machine\PYZhy{}learning\PYZhy{}databases}\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}
+                      \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/credit\PYZhy{}screening/crx.data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{header} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A4}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A5}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A6}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A7}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A9}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A10}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A11}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A12}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A13}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A14}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A15}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A16}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{n}{types} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float64}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{target\PYZus{}url}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n}{header}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}18}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{25}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{25}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 (690, 16)
@@ -415,32 +408,32 @@ DATOS}\label{visualizaciuxf3n-de-los-datos}
     \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}18}]:}    A1     A2      A3 A4 A5  A6 A7     A8 A9 A10  A11 A12 A13    A14    A15 A16
-         0   b  30.83   0.000  u  g   w  v  1.250  t   t    1   f   g  00202      0   +
-         1   a  58.67   4.460  u  g   q  h  3.040  t   t    6   f   g  00043    560   +
-         2   a  24.50   0.500  u  g   q  h  1.500  t   f    0   f   g  00280    824   +
-         3   b  27.83   1.540  u  g   w  v  3.750  t   t    5   t   g  00100      3   +
-         4   b  20.17   5.625  u  g   w  v  1.710  t   f    0   f   s  00120      0   +
-         5   b  32.08   4.000  u  g   m  v  2.500  t   f    0   t   g  00360      0   +
-         6   b  33.17   1.040  u  g   r  h  6.500  t   f    0   t   g  00164  31285   +
-         7   a  22.92  11.585  u  g  cc  v  0.040  t   f    0   f   g  00080   1349   +
-         8   b  54.42   0.500  y  p   k  h  3.960  t   f    0   f   g  00180    314   +
-         9   b  42.50   4.915  y  p   w  v  3.165  t   f    0   t   g  00052   1442   +
-         10  b  22.08   0.830  u  g   c  h  2.165  f   f    0   t   g  00128      0   +
-         11  b  29.92   1.835  u  g   c  h  4.335  t   f    0   f   g  00260    200   +
-         12  a  38.25   6.000  u  g   k  v  1.000  t   f    0   t   g  00000      0   +
-         13  b  48.08   6.040  u  g   k  v  0.040  f   f    0   f   g  00000   2690   +
-         14  a  45.83  10.500  u  g   q  v  5.000  t   t    7   t   g  00000      0   +
-         15  b  36.67   4.415  y  p   k  v  0.250  t   t   10   t   g  00320      0   +
-         16  b  28.25   0.875  u  g   m  v  0.960  t   t    3   t   g  00396      0   +
-         17  a  23.25   5.875  u  g   q  v  3.170  t   t   10   f   g  00120    245   +
-         18  b  21.83   0.250  u  g   d  h  0.665  t   f    0   t   g  00000      0   +
-         19  a  19.17   8.585  u  g  cc  h  0.750  t   t    7   f   g  00096      0   +
-         20  b  25.00  11.250  u  g   c  v  2.500  t   t   17   f   g  00200   1208   +
-         21  b  23.25   1.000  u  g   c  v  0.835  t   f    0   f   s  00300      0   +
-         22  a  47.75   8.000  u  g   c  v  7.875  t   t    6   t   g  00000   1260   +
-         23  a  27.42  14.500  u  g   x  h  3.085  t   t    1   f   g  00120     11   +
-         24  a  41.17   6.500  u  g   q  v  0.500  t   t    3   t   g  00145      0   +
+{\color{outcolor}Out[{\color{outcolor}3}]:}    A1     A2      A3 A4 A5  A6 A7     A8 A9 A10  A11 A12 A13    A14    A15 A16
+        0   b  30.83   0.000  u  g   w  v  1.250  t   t    1   f   g  00202      0   +
+        1   a  58.67   4.460  u  g   q  h  3.040  t   t    6   f   g  00043    560   +
+        2   a  24.50   0.500  u  g   q  h  1.500  t   f    0   f   g  00280    824   +
+        3   b  27.83   1.540  u  g   w  v  3.750  t   t    5   t   g  00100      3   +
+        4   b  20.17   5.625  u  g   w  v  1.710  t   f    0   f   s  00120      0   +
+        5   b  32.08   4.000  u  g   m  v  2.500  t   f    0   t   g  00360      0   +
+        6   b  33.17   1.040  u  g   r  h  6.500  t   f    0   t   g  00164  31285   +
+        7   a  22.92  11.585  u  g  cc  v  0.040  t   f    0   f   g  00080   1349   +
+        8   b  54.42   0.500  y  p   k  h  3.960  t   f    0   f   g  00180    314   +
+        9   b  42.50   4.915  y  p   w  v  3.165  t   f    0   t   g  00052   1442   +
+        10  b  22.08   0.830  u  g   c  h  2.165  f   f    0   t   g  00128      0   +
+        11  b  29.92   1.835  u  g   c  h  4.335  t   f    0   f   g  00260    200   +
+        12  a  38.25   6.000  u  g   k  v  1.000  t   f    0   t   g  00000      0   +
+        13  b  48.08   6.040  u  g   k  v  0.040  f   f    0   f   g  00000   2690   +
+        14  a  45.83  10.500  u  g   q  v  5.000  t   t    7   t   g  00000      0   +
+        15  b  36.67   4.415  y  p   k  v  0.250  t   t   10   t   g  00320      0   +
+        16  b  28.25   0.875  u  g   m  v  0.960  t   t    3   t   g  00396      0   +
+        17  a  23.25   5.875  u  g   q  v  3.170  t   t   10   f   g  00120    245   +
+        18  b  21.83   0.250  u  g   d  h  0.665  t   f    0   t   g  00000      0   +
+        19  a  19.17   8.585  u  g  cc  h  0.750  t   t    7   f   g  00096      0   +
+        20  b  25.00  11.250  u  g   c  v  2.500  t   t   17   f   g  00200   1208   +
+        21  b  23.25   1.000  u  g   c  v  0.835  t   f    0   f   s  00300      0   +
+        22  a  47.75   8.000  u  g   c  v  7.875  t   t    6   t   g  00000   1260   +
+        23  a  27.42  14.500  u  g   x  h  3.085  t   t    1   f   g  00120     11   +
+        24  a  41.17   6.500  u  g   q  v  0.500  t   t    3   t   g  00145      0   +
 \end{Verbatim}
             
     \subsection{VARIABLES DESAPARECIDAS}\label{variables-desaparecidas}
@@ -458,6 +451,7 @@ automática.
 {\color{incolor}In [{\color{incolor}4}]:} \PY{n}{dataDummie} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{data}\PY{p}{)}
         \PY{n}{dataDummie}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}4}]:}       A3    A8  A11  A15  A1\_?  A1\_a  A1\_b  A2\_13.75  A2\_15.17  A2\_15.75  \textbackslash{}
@@ -493,6 +487,7 @@ object (string).
 {\color{incolor}In [{\color{incolor}5}]:} \PY{n}{data}\PY{o}{.}\PY{n}{ftypes}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}5}]:} A1      object:dense
         A2      object:dense
@@ -525,6 +520,7 @@ binario 1 en caso de que esté aprobado y 0 en caso contrario.
 {\color{incolor}In [{\color{incolor}6}]:} \PY{n}{data}\PY{o}{.}\PY{n}{A16} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{d}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
 \end{Verbatim}
 
+
     Sin embargo hay otras variables que deberían ser numéricas y aparecen
 como un string. Esto nos lleva a otra pregunta. ¿Por que se leen como
 string? La respuesta es sencilla: Las variables desaparecidas. El
@@ -543,6 +539,7 @@ necesario que antes sustituyamos los '?' por el valor 'NaN'.
         \PY{n+nb}{print}\PY{p}{(}\PY{n}{d1}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
         \PY{n}{msno}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{d1}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 A1     12
@@ -566,7 +563,7 @@ dtype: int64
     \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}7}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x21823635978>
+{\color{outcolor}Out[{\color{outcolor}7}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x284029d3908>
 \end{Verbatim}
             
     \begin{center}
@@ -591,7 +588,8 @@ DESAPARECIDAS}\label{sustituciuxf3n-de-las-variables-desaparecidas}
 a ser posible y comprobar si hay anomalias, en caso de que las haya
 habría que sustituir por la mediana, en caso contrario, por la media.\\
 Las variables categoricas habría que sustituirlas por el valor más
-repetido (moda).
+repetido (moda) ó crear una nueva clase llamada '?', dependiendo de cada
+caso.
 
     Para poder utilizar los casos con variables desaparecidas utilizaremos
 distintos métodos y los analizaremos para quedarnos con el que nos
@@ -620,6 +618,7 @@ variables desaparecidas.
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mediana A2: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{d2}\PY{o}{.}\PY{n}{A2}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 Media A2: 31.50381316998472
 Mediana A2: 28.42
@@ -644,6 +643,7 @@ de estos.
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Media A14: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{d2}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mediana A14: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{d2}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Media A14: 180.35987748851454
@@ -679,6 +679,7 @@ Comprobamos como han cambiado los datos si sustituimos A2 con la media:
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Diferencia entre las medianas A2: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{d3}\PY{o}{.}\PY{n}{A2}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{d2}\PY{o}{.}\PY{n}{A2}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 Reemplazando los valores desaparecidos con la media:
 Media A2: 31.567051823246135
@@ -711,6 +712,7 @@ mediana:
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Diferencia entre las medias A2: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{d3}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{d2}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Diferencia entre las medianas A2: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{d3}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{d2}\PY{o}{.}\PY{n}{A14}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Reemplazando los valores desaparecidos con la mediana:
@@ -748,6 +750,7 @@ ver que caso nos conviene más para cada característica:
          \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 A1
 
@@ -764,6 +767,7 @@ A1
 {\color{incolor}In [{\color{incolor}13}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 A4
@@ -783,6 +787,7 @@ A4
          \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 A5
 
@@ -800,6 +805,7 @@ A5
 {\color{incolor}In [{\color{incolor}15}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A6}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A6}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 A6
@@ -829,6 +835,7 @@ A6
 {\color{incolor}In [{\color{incolor}16}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 A7
@@ -863,6 +870,7 @@ característica.
          \PY{n}{d3}\PY{o}{.}\PY{n}{A7} \PY{o}{=} \PY{n}{d1}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{,} \PY{n}{d2}\PY{o}{.}\PY{n}{A7}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     Por tanto, una vez hemos remplazado estos valores, volvemos a mostrar
 como quedaría nuestro conjunto de datos:
 
@@ -870,6 +878,7 @@ como quedaría nuestro conjunto de datos:
 {\color{incolor}In [{\color{incolor}18}]:} \PY{n}{d4} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{d3}\PY{p}{)}
          \PY{n}{d4}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}18}]:}       A2     A3    A8  A11    A14  A15  A16  A1\_a  A1\_b  A4\_a  {\ldots}    A7\_b  \textbackslash{}
@@ -895,6 +904,7 @@ como quedaría nuestro conjunto de datos:
 {\color{incolor}In [{\color{incolor}19}]:} \PY{n}{d4}\PY{o}{.}\PY{n}{columns}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}19}]:} Index(['A2', 'A3', 'A8', 'A11', 'A14', 'A15', 'A16', 'A1\_a', 'A1\_b', 'A4\_a',
                 'A4\_b', 'A5\_a', 'A5\_b', 'A6\_a', 'A6\_b', 'A7\_a', 'A7\_b', 'A9\_f', 'A9\_t',
@@ -916,6 +926,7 @@ Por tanto, comenzamos con este modelo de entrenamiento:
 {\color{incolor}In [{\color{incolor}20}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split} \PY{k}{as} \PY{n}{tts}
 \end{Verbatim}
 
+
     Importamos la función \emph{train\_test\_split}, de \emph{sklearn}, que
 nos va a permitir separar nuestro conjunto de datos en dos: Uno para
 entrenar y otro para validar. Con este último mediremos el error de
@@ -925,6 +936,7 @@ predicción que ofrece nuestro modelo.
 {\color{incolor}In [{\color{incolor}21}]:} \PY{n}{x} \PY{o}{=} \PY{n}{d4}\PY{o}{.}\PY{n}{values}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{d4}\PY{o}{.}\PY{n}{columns}\PY{o}{!=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
          \PY{n}{y} \PY{o}{=} \PY{n}{d4}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
 \end{Verbatim}
+
 
     Dividiremos los datos en un 80\% (552) de entrenamiento y un 20\% (138)
 de validación pues nuestro conjunto de datos es pequeño y es necesario
@@ -945,8 +957,9 @@ dar lugar a un resultado que no es realista.
          \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{yVal}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{yVal}\PY{p}{)}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}22}]:} 41.30434782608695
+{\color{outcolor}Out[{\color{outcolor}22}]:} 55.072463768115945
 \end{Verbatim}
             
     Pasamos entonces a entrenar nuestro modelo. Para ello definimos las
@@ -978,13 +991,14 @@ explicarán en el apartado correspondiente de \emph{Regresión Logística}.
              \PY{k}{return} \PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{mu}\PY{p}{,} \PY{n}{s}\PY{p}{)}
 \end{Verbatim}
 
+
     Definimos una función que entrene a partir de unos datos dados y nos
 devuelva el porcentaje de acierto de la validación, también haremos que
 devuelva el porcentaje de acierto sobre los propios casos de
 entrenamiento, que nos permitirá ver si existe sobreajuste.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}19}]:} \PY{k}{def} \PY{n+nf}{trainRegresion}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{lamb}\PY{p}{)} \PY{p}{:}
+{\color{incolor}In [{\color{incolor}24}]:} \PY{k}{def} \PY{n+nf}{trainRegresion}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{lamb}\PY{p}{)} \PY{p}{:}
              \PY{n}{theta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
          
              \PY{n}{result} \PY{o}{=} \PY{n}{opt}\PY{o}{.}\PY{n}{fmin\PYZus{}tnc}\PY{p}{(}\PY{n}{func}\PY{o}{=}\PY{n}{funCoste}\PY{p}{,} \PY{n}{x0}\PY{o}{=}\PY{n}{theta}\PY{p}{,} 
@@ -1000,12 +1014,14 @@ entrenamiento, que nos permitirá ver si existe sobreajuste.
              \PY{k}{return}\PY{p}{(}\PY{n}{valP} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{,} \PY{n}{trainP} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}25}]:} \PY{n}{trainRegresion}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}25}]:} (89.85507246376811, 84.60144927536231)
+{\color{outcolor}Out[{\color{outcolor}25}]:} (86.23188405797102, 86.59420289855072)
 \end{Verbatim}
             
     Estos porcentajes variarán según la división de los datos, pero siempre
@@ -1028,12 +1044,14 @@ se puede comprobar realizando la media de multiples entrenamientos.
              \PY{k}{return} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{train}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}27}]:} \PY{n}{meanTrainRegresion}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}27}]:} (84.96666666666665, 86.29239130434783)
+{\color{outcolor}Out[{\color{outcolor}27}]:} (85.12753623188406, 86.31920289855074)
 \end{Verbatim}
             
     De este modo podemos observar que el modelo acierta casi el 85\% de los
@@ -1056,7 +1074,7 @@ parámetro que nos permita seleccionar el tramo a mostrar para facilitar
 el análisis:
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{def} \PY{n+nf}{curvaAprendizaje}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{,} \PY{n}{lamb}\PY{p}{,} \PY{n}{ret}\PY{p}{,} \PY{n}{intervalo}\PY{o}{=}\PY{n+nb}{slice}\PY{p}{(}\PY{k+kc}{None}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{def} \PY{n+nf}{curvaAprendizaje}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{,} \PY{n}{lamb}\PY{p}{,} \PY{n}{ret}\PY{p}{,} \PY{n}{intervalo}\PY{o}{=}\PY{n+nb}{slice}\PY{p}{(}\PY{k+kc}{None}\PY{p}{)}\PY{p}{)}\PY{p}{:}
              \PY{n}{trainError} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
              \PY{n}{validationError} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
              
@@ -1086,13 +1104,12 @@ el análisis:
              \PY{k}{else}\PY{p}{:} \PY{k}{return}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}29}]:} \PY{c+c1}{\PYZsh{}Salta overflow, pero según he mirado se puede ignorar porque }
-         \PY{c+c1}{\PYZsh{}numpy se encarga del overflow haciendo las aproximaciones que necesite}
-         \PY{c+c1}{\PYZsh{}se pueden ignorar con}
-         \PY{n}{np}\PY{o}{.}\PY{n}{seterr}\PY{p}{(}\PY{n}{over}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{np}\PY{o}{.}\PY{n}{seterr}\PY{p}{(}\PY{n}{over}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{tError}\PY{p}{,} \PY{n}{valError} \PY{o}{=} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_63_0.png}
@@ -1105,8 +1122,9 @@ el análisis:
          \PY{n}{valor}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}30}]:} 50
+{\color{outcolor}Out[{\color{outcolor}30}]:} 57
 \end{Verbatim}
             
     Para analizar mejor las curvas mostraremos los ejemplos de entrenamiento
@@ -1115,6 +1133,7 @@ a partir de \emph{valor}, que es donde las curvas se empiezan a juntar.
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}31}]:} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{slice}\PY{p}{(}\PY{n}{valor}\PY{p}{,}\PY{k+kc}{None}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_66_0.png}
@@ -1150,6 +1169,7 @@ entre 0 y 100
 {\color{incolor}In [{\color{incolor}32}]:} \PY{n}{lambdas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{2000}\PY{p}{)}
 \end{Verbatim}
 
+
     Con estas lambdas vamos a entrenar nuestro modelo y lo evaluaremos con
 los datos de validación. Seleccionaremos aquella lambda que máximice el
 porcentaje de acierto sobre los ejemplos de entrenamiento.
@@ -1160,14 +1180,16 @@ porcentaje de acierto sobre los ejemplos de entrenamiento.
              \PY{n}{mejor}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{trainRegresion}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}34}]:} \PY{n}{mejor} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{mejor}\PY{p}{)}
          \PY{n}{l} \PY{o}{=} \PY{n}{lambdas}\PY{p}{[}\PY{n}{mejor}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{p}{)}\PY{p}{]}
          \PY{n}{l}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}34}]:} 4.252126063031516
+{\color{outcolor}Out[{\color{outcolor}34}]:} 0.3001500750375187
 \end{Verbatim}
             
     Como podemos ver, el porcentaje de aciertos mejora en cierta medida
@@ -1177,8 +1199,9 @@ gracias al \(\lambda\) obtenido.
 {\color{incolor}In [{\color{incolor}35}]:} \PY{n}{trainRegresion}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{l}\PY{p}{)}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}35}]:} (90.57971014492753, 85.68840579710145)
+{\color{outcolor}Out[{\color{outcolor}35}]:} (86.95652173913044, 86.77536231884058)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1186,8 +1209,9 @@ gracias al \(\lambda\) obtenido.
          \PY{n}{media1}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}36}]:} 85.02608695652172
+{\color{outcolor}Out[{\color{outcolor}36}]:} 84.82028985507246
 \end{Verbatim}
             
     Si realizamos la curva de aprendizaje en el mismo punto donde antes se
@@ -1199,6 +1223,7 @@ mejor a los de entrenamiento.
 {\color{incolor}In [{\color{incolor}37}]:} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{slice}\PY{p}{(}\PY{n}{valor}\PY{p}{,}\PY{k+kc}{None}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_78_0.png}
     \end{center}
@@ -1207,6 +1232,7 @@ mejor a los de entrenamiento.
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}38}]:} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{n}{l}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{slice}\PY{p}{(}\PY{n}{valor}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_79_0.png}
@@ -1241,6 +1267,7 @@ ajustar \(\lambda\) para tener obtener conclusiones de ello después:
              \PY{k}{return} \PY{n}{l}
 \end{Verbatim}
 
+
     Remplazamos los datos con la nueva configuración:
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1251,12 +1278,14 @@ ajustar \(\lambda\) para tener obtener conclusiones de ello después:
          \PY{n}{d3}\PY{o}{.}\PY{n}{A7} \PY{o}{=} \PY{n}{d1}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{?}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}41}]:} \PY{n}{d4} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{d3}\PY{p}{)}
          \PY{n}{x\PYZus{}2} \PY{o}{=} \PY{n}{d4}\PY{o}{.}\PY{n}{values}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{d4}\PY{o}{.}\PY{n}{columns}\PY{o}{!=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
          \PY{n}{y\PYZus{}2} \PY{o}{=} \PY{n}{d4}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A16}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
          \PY{n}{xTrain\PYZus{}2}\PY{p}{,} \PY{n}{xVal\PYZus{}2}\PY{p}{,} \PY{n}{yTrain\PYZus{}2}\PY{p}{,} \PY{n}{yVal\PYZus{}2} \PY{o}{=} \PY{n}{tts}\PY{p}{(}\PY{n}{x\PYZus{}2}\PY{p}{,} \PY{n}{y\PYZus{}2}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{)}
 \end{Verbatim}
+
 
     Comprobamos que el porcentaje medio obtenido se asemeja mucho a la ya
 comprobada configuración de datos
@@ -1265,13 +1294,15 @@ comprobada configuración de datos
 {\color{incolor}In [{\color{incolor}42}]:} \PY{n}{meanTrainRegresion}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}42}]:} 85.05797101449275
+{\color{outcolor}Out[{\color{outcolor}42}]:} 84.87101449275363
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{curvaAprendizaje}\PY{p}{(}\PY{n}{xTrain\PYZus{}2}\PY{p}{,} \PY{n}{yTrain\PYZus{}2}\PY{p}{,} \PY{n}{xVal\PYZus{}2}\PY{p}{,} \PY{n}{yVal\PYZus{}2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_87_0.png}
@@ -1284,8 +1315,9 @@ comprobada configuración de datos
          \PY{n}{media2}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}44}]:} 85.15072463768115
+{\color{outcolor}Out[{\color{outcolor}44}]:} 84.87826086956521
 \end{Verbatim}
             
     Como vemos, una vez ajustada lambda para las dos configuraciones, se
@@ -1296,9 +1328,10 @@ obtienen unos resultados muy parecidos.
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Atributos sustituidos con una clase nueva: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{media2}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-Atributos sustituidos con la moda: 85.02608695652172
-Atributos sustituidos con una clase nueva: 85.15072463768115
+Atributos sustituidos con la moda: 84.82028985507246
+Atributos sustituidos con una clase nueva: 84.87826086956521
 
     \end{Verbatim}
 
@@ -1309,6 +1342,7 @@ mejores resultados:
 {\color{incolor}In [{\color{incolor}46}]:} \PY{k}{if}\PY{p}{(}\PY{n}{media2} \PY{o}{\PYZgt{}} \PY{n}{media1}\PY{p}{)}\PY{p}{:}
              \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{x\PYZus{}2}\PY{p}{,} \PY{n}{y\PYZus{}2}\PY{p}{,} \PY{n}{xTrain\PYZus{}2}\PY{p}{,} \PY{n}{yTrain\PYZus{}2}\PY{p}{,} \PY{n}{xVal\PYZus{}2}\PY{p}{,} \PY{n}{yVal\PYZus{}2}
 \end{Verbatim}
+
 
     Una vez tenemos los conjuntos de entrenamiento y validación procederemos
 a analizar los 3 métodos de entrenamiento: \textbf{Regresión Logística},
@@ -1364,6 +1398,7 @@ usaremos la librería \emph{time} para ello:
 {\color{incolor}In [{\color{incolor}47}]:} \PY{k+kn}{import} \PY{n+nn}{time}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}48}]:} \PY{n}{tic} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{process\PYZus{}time}\PY{p}{(}\PY{p}{)}      
          
@@ -1377,9 +1412,10 @@ usaremos la librería \emph{time} para ello:
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo de ejecución: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{timeRegresion}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-Score: 84.05797101449275
-Tiempo de ejecución: 0.015625
+Score: 89.13043478260869
+Tiempo de ejecución: 0.078125
 
     \end{Verbatim}
 
@@ -1446,6 +1482,7 @@ de pesos.
              \PY{k}{return} \PY{n}{a3}
 \end{Verbatim}
 
+
     \subsection{FUNCIÓN DE COSTE}\label{funciuxf3n-de-coste}
 
     Dada por la siguiente expresión matemática:
@@ -1453,7 +1490,10 @@ de pesos.
 \[J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[  -y^{(i)}_k  log((h_\theta(x^{(i)}))_k) - (1 - y^{(i)}_k) log(1 - (h_\theta(x^{(i)}))_k)  ] \]
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}50}]:} \PY{k}{def} \PY{n+nf}{funCosteRed}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{num\PYZus{}etiquetas}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}50}]:} \PY{k}{def} \PY{n+nf}{safe\PYZus{}ln}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{minval}\PY{o}{=}\PY{l+m+mf}{0.0000000001}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{n+nb}{min}\PY{o}{=}\PY{n}{minval}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{funCosteRed}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{num\PYZus{}etiquetas}\PY{p}{)}\PY{p}{:}
              \PY{n}{yk} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{num\PYZus{}etiquetas}\PY{p}{)}\PY{p}{)}
              \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{num\PYZus{}etiquetas} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
                  \PY{n}{yaux} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{y} \PY{o}{==} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
@@ -1461,10 +1501,11 @@ de pesos.
                  
              \PY{n}{h\PYZus{}result} \PY{o}{=} \PY{n}{h}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{x}\PY{p}{)}
              
-             \PY{n}{yaux} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(} \PY{n}{h\PYZus{}result}\PY{p}{)} \PY{o}{*} \PY{n}{yk}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{h\PYZus{}result} \PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{yk}\PY{p}{)}\PY{p}{)}
+             \PY{n}{yaux} \PY{o}{=} \PY{p}{(}\PY{n}{safe\PYZus{}ln}\PY{p}{(} \PY{n}{h\PYZus{}result}\PY{p}{)} \PY{o}{*} \PY{n}{yk}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{safe\PYZus{}ln}\PY{p}{(} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{h\PYZus{}result} \PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{yk}\PY{p}{)}\PY{p}{)}
          
              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{*} \PY{n}{yaux}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
+
 
     Y su versión regularizada:
 
@@ -1477,6 +1518,7 @@ de pesos.
              \PY{k}{return} \PY{n}{coste} \PY{o}{+} \PY{p}{(}\PY{n}{lamb}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{theta1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} 
                                                \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{theta2}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
+
 
     \subsection{GRADIENTE}\label{gradiente}
 
@@ -1510,6 +1552,7 @@ de pesos.
              \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{D1}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{D2}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     Para calcular el gradiente necesitaremos también la función
 \emph{salidaCapas}, una redefinición de la función de hipótesis que nos
 devolverá los valores de todas las capas junto a \emph{z2}, que es la
@@ -1532,6 +1575,7 @@ oculta) y los datos de entrada.
              \PY{k}{return} \PY{p}{(}\PY{n}{a1}\PY{p}{,}\PY{n}{a2}\PY{p}{,}\PY{n}{a3}\PY{p}{,}\PY{n}{z2}\PY{p}{)}
 \end{Verbatim}
 
+
     Dado que a las matrices de pesos se pasarán como parámetro mediante un
 solo vector, necesitaremos una función \emph{despliega} que nos permita
 separar ambas matrices. Este vector se debe a que las función
@@ -1550,6 +1594,7 @@ pesos de multiples matrices como si fuesen un único parámetro.
              
              \PY{k}{return} \PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{)}
 \end{Verbatim}
+
 
     Finalmente definimos \emph{costeRN}, que devuelve una tupla con el coste
 y el gradiente, esta es la función que utilizará \emph{minimize} para
@@ -1574,6 +1619,7 @@ los tamaños de las capas lo convertirá en dos matrices.
              \PY{k}{return} \PY{p}{(}\PY{n}{coste}\PY{p}{,}\PY{n}{gradient}\PY{p}{)}
 \end{Verbatim}
 
+
     Para entrenar la red neuronal inicializaremos las matrices de pesos con
 unos valores aleatorios dentro del intervalo
 (\(\epsilon_{ini}\))determinado por:
@@ -1590,6 +1636,7 @@ con los que nos ofrezcan mejores resultados.
              \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{Eini}\PY{p}{,} \PY{n}{Eini}\PY{p}{,} \PY{p}{(}\PY{n}{L\PYZus{}in}\PY{p}{,} \PY{n}{L\PYZus{}out}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     Para terminar, definimos una función \emph{trainRN} que será la
 encargada de realizar el entrenamiento y la validación. Esta función
 recibe el valor de regulación \emph{lamb}, el tamaño de las capas de
@@ -1604,7 +1651,7 @@ validación y entrenamiento en una tupla y las matrices de pesos en un
 vector.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}21}]:} \PY{k}{def} \PY{n+nf}{trainRN}\PY{p}{(}\PY{n}{lamb}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{datos}\PY{p}{,} \PY{n}{iteraciones}\PY{o}{=}\PY{l+m+mi}{70}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}57}]:} \PY{k}{def} \PY{n+nf}{trainRN}\PY{p}{(}\PY{n}{lamb}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{datos}\PY{p}{,} \PY{n}{iteraciones}\PY{o}{=}\PY{l+m+mi}{70}\PY{p}{)}\PY{p}{:}
              \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal} \PY{o}{=} \PY{n}{datos}
              \PY{n}{thetaRnd1} \PY{o}{=} \PY{n}{pesosAleatorios}\PY{p}{(}\PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
              \PY{n}{thetaRnd2} \PY{o}{=} \PY{n}{pesosAleatorios}\PY{p}{(}\PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
@@ -1619,17 +1666,14 @@ vector.
              \PY{n}{theta1}\PY{p}{,} \PY{n}{theta2} \PY{o}{=} \PY{n}{despliega}\PY{p}{(}\PY{n}{optTheta}\PY{p}{,} \PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
              
              \PY{n}{xval} \PY{o}{=} \PY{p}{(}\PY{n}{xVal}\PY{o}{\PYZhy{}}\PY{n}{xP}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{xP}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
-             \PY{n}{probabilidades} \PY{o}{=} \PY{n}{h}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{xVal}\PY{p}{)}
-         
-             
+             \PY{n}{probabilidades} \PY{o}{=} \PY{n}{h}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{xVal}\PY{p}{)} 
              \PY{n}{probabilidades} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{i} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mf}{0.5} \PY{k}{else} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{probabilidades}\PY{p}{]}
-         
-             \PY{c+c1}{\PYZsh{}Vector de booleanos}
+             
              \PY{n}{correctos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{probabilidades} \PY{o}{==} \PY{n}{yVal}\PY{p}{)}
          
              \PY{n}{porcentajeVal} \PY{o}{=} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{correctos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{probabilidades}\PY{p}{)}
              
-             \PY{c+c1}{\PYZsh{}Clasificacion entrenamiento}
+         
              \PY{n}{probabilidades} \PY{o}{=} \PY{n}{h}\PY{p}{(}\PY{n}{theta1}\PY{p}{,} \PY{n}{theta2}\PY{p}{,} \PY{n}{xTrain}\PY{p}{)}
              \PY{n}{probabilidades} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{k}{if} \PY{n}{i} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mf}{0.5} \PY{k}{else} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{probabilidades}\PY{p}{]}
          
@@ -1640,6 +1684,7 @@ vector.
              \PY{k}{return} \PY{p}{(}\PY{p}{(}\PY{n}{porcentajeVal}\PY{p}{,}\PY{n}{porcentajeTrain}\PY{p}{)}\PY{p}{,} \PY{n}{optTheta}\PY{p}{)}
 \end{Verbatim}
 
+
     Una vez tenemos todas las funciones empezaremos el entrenamiento.
 Empezaremos con un valor de regulación de \(0.1\) y \(500\) iteraciones.
 
@@ -1649,8 +1694,9 @@ Empezaremos con un valor de regulación de \(0.1\) y \(500\) iteraciones.
          \PY{n}{trainRN}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{datos}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}58}]:} (82.6086956521739, 90.21739130434783)
+{\color{outcolor}Out[{\color{outcolor}58}]:} (84.05797101449275, 90.57971014492753)
 \end{Verbatim}
             
     Para intentar mejorar este porcentaje analizaremos el porcentaje de
@@ -1659,7 +1705,7 @@ iteraciones mediante una función \emph{curvaIteraciones}. Esta función
 nos devolverá el número de iteraciones óptimo para nuestro modelo.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}22}]:} \PY{k}{def} \PY{n+nf}{curvaIteraciones} \PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{,} \PY{n}{lamb}\PY{p}{,} \PY{n}{capas}\PY{p}{,}
+{\color{incolor}In [{\color{incolor}59}]:} \PY{k}{def} \PY{n+nf}{curvaIteraciones} \PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{xval}\PY{p}{,} \PY{n}{yval}\PY{p}{,} \PY{n}{lamb}\PY{p}{,} \PY{n}{capas}\PY{p}{,}
                                \PY{n}{iteraciones}\PY{p}{,} \PY{n}{intervalo}\PY{o}{=}\PY{n+nb}{slice}\PY{p}{(}\PY{k+kc}{None}\PY{p}{)}\PY{p}{)} \PY{p}{:}
              \PY{n}{trainError} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{iteraciones}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
              \PY{n}{validationError} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{iteraciones}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
@@ -1680,10 +1726,12 @@ nos devolverá el número de iteraciones óptimo para nuestro modelo.
              \PY{k}{return} \PY{n}{iteraciones}\PY{p}{[}\PY{n}{validationError}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{p}{)}\PY{p}{]}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}60}]:} \PY{n}{it} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{70}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{300}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{750}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{1250}\PY{p}{,} \PY{l+m+mi}{1500}\PY{p}{,} \PY{l+m+mi}{2000}\PY{p}{]}
          \PY{n}{bestIt} \PY{o}{=} \PY{n}{curvaIteraciones}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{it}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_126_0.png}
@@ -1693,6 +1741,7 @@ nos devolverá el número de iteraciones óptimo para nuestro modelo.
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}61}]:} \PY{n}{bestIt}
 \end{Verbatim}
+
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}61}]:} 500
@@ -1733,10 +1782,12 @@ mejor número de nodos internos para nuestro modelo.
              \PY{k}{return} \PY{n}{nodos}\PY{p}{[}\PY{n}{validationError}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{p}{)}\PY{p}{]}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}63}]:} \PY{n}{nodos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
-         \PY{n}{bestNodo} \PY{o}{=} \PY{n}{curvaNodos}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{n}{nodos}\PY{p}{)}
+         \PY{n}{bestNodo} \PY{o}{=} \PY{n}{curvaNodos}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{bestIt}\PY{p}{,} \PY{n}{nodos}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_130_0.png}
@@ -1747,8 +1798,9 @@ mejor número de nodos internos para nuestro modelo.
 {\color{incolor}In [{\color{incolor}64}]:} \PY{n}{bestNodo}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}64}]:} 5
+{\color{outcolor}Out[{\color{outcolor}64}]:} 17
 \end{Verbatim}
             
     Una vez tenemos el mejor número de nodos y el mejor número de
@@ -1787,6 +1839,7 @@ utilizada para ello.
              \PY{k}{return} \PY{n}{mejor}
 \end{Verbatim}
 
+
     Elegimos una secuencia de lambdas a probar y establecemos el número
 óptimo de nodos previamente calculado.
 
@@ -1795,16 +1848,20 @@ utilizada para ello.
          \PY{n}{capas}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{bestNodo}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}67}]:} \PY{n}{scoreRN}\PY{p}{,} \PY{n}{timeRN}\PY{p}{,} \PY{n}{lamb} \PY{o}{=} \PY{n}{mejorAprendizaje}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{lambdas}\PY{p}{,} \PY{n}{bestIt}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{datos}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}67}]:} \PY{n}{np}\PY{o}{.}\PY{n}{seterr}\PY{p}{(}\PY{n}{over}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{scoreRN}\PY{p}{,} \PY{n}{timeRN}\PY{p}{,} \PY{n}{lamb} \PY{o}{=} \PY{n}{mejorAprendizaje}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{lambdas}\PY{p}{,} \PY{n}{bestIt}\PY{p}{,} \PY{n}{capas}\PY{p}{,} \PY{n}{datos}\PY{p}{)}
 \end{Verbatim}
+
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}68}]:} \PY{n}{lamb}
 \end{Verbatim}
 
+
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}68}]:} 0.01
+{\color{outcolor}Out[{\color{outcolor}68}]:} 1
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -1812,24 +1869,32 @@ utilizada para ello.
          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo de ejecución: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{timeRN}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
-Score: 89.1304347826087
-Tiempo de ejecución: 46.375
+Score: 91.30434782608695
+Tiempo de ejecución: 48.296875
 
     \end{Verbatim}
 
     \section{SUPPORT VECTOR MACHINES}\label{support-vector-machines}
 
-    Finalizaremos con la SVM (Support Vector Machines). Para esto usaremos
-la libreria de sklearn \emph{svm}. Tenemos que obtener un clasificador
-mediante la clase SVC con un kernel y un valor de regularización.
-Ajustaremos nuestros casos de entrenamiento mediante la función
-\emph{fit} y, finalmente, gracias a la función \emph{score} podremos
-validar nuestros casos de validación y obtener el porcentaje de acierto.
+    Finalizaremos con la SVM (Support Vector Machines). La SVM es un
+algoritmo de aprendizaje automático que realiza la clasificación
+generando puntos en un espacio de n dimensiones, donde n es el número de
+atributos del dataset, y separa los puntos mediante un hiperplano
+buscando la mejor división de los datos.
+
+Para esto usaremos la libreria de sklearn \emph{svm}. Tenemos que
+obtener un clasificador mediante la clase SVC con un kernel y un valor
+de regularización. Ajustaremos nuestros casos de entrenamiento mediante
+la función \emph{fit} y, finalmente, gracias a la función \emph{score}
+podremos validar nuestros casos de validación y obtener el porcentaje de
+acierto.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}70}]:} \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{svm} \PY{k}{as} \PY{n+nn}{svm}
 \end{Verbatim}
+
 
     \subsection{KERNEL}\label{kernel}
 
@@ -1845,6 +1910,7 @@ finalmente
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}71}]:} \PY{n}{x}\PY{o}{.}\PY{n}{shape}
 \end{Verbatim}
+
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}71}]:} (690, 29)
@@ -1873,10 +1939,12 @@ parámetro:
              \PY{k}{return} \PY{n}{tupla}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}73}]:} \PY{n}{val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
          \PY{n}{val}
 \end{Verbatim}
+
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}73}]:} array([ 0.01      ,  0.53578947,  1.06157895,  1.58736842,  2.11315789,
@@ -1889,32 +1957,37 @@ parámetro:
 {\color{incolor}In [{\color{incolor}74}]:} \PY{n}{c} \PY{o}{=} \PY{n}{ajustarC}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{,} \PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
 \end{Verbatim}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}115}]:} \PY{n}{tic} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{process\PYZus{}time}\PY{p}{(}\PY{p}{)} 
-          
-          \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{c}\PY{p}{)}
-          \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{)}
-          \PY{n}{scoreSVM} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
-          \PY{n}{scoreSVM} \PY{o}{*}\PY{o}{=} \PY{l+m+mi}{100}
-          
-          \PY{n}{toc} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{process\PYZus{}time}\PY{p}{(}\PY{p}{)}
-          
-          \PY{n}{timeSVM} \PY{o}{=} \PY{n}{toc} \PY{o}{\PYZhy{}} \PY{n}{tic}
-          
-          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Score: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{scoreSVM}\PY{p}{)}\PY{p}{)}
-          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo de ejecución: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{timeSVM}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Score: 87.68115942028986
-Tiempo de ejecución: 40.953125
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{tic} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{process\PYZus{}time}\PY{p}{(}\PY{p}{)} 
+         
+         \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{n}{c}\PY{p}{)}
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{xTrain}\PY{p}{,} \PY{n}{yTrain}\PY{p}{)}
+         \PY{n}{scoreSVM} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{xVal}\PY{p}{,} \PY{n}{yVal}\PY{p}{)}
+         \PY{n}{scoreSVM} \PY{o}{*}\PY{o}{=} \PY{l+m+mi}{100}
+         
+         \PY{n}{toc} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{process\PYZus{}time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{timeSVM} \PY{o}{=} \PY{n}{toc} \PY{o}{\PYZhy{}} \PY{n}{tic}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Score: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{scoreSVM}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tiempo de ejecución: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{timeSVM}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Score: 89.85507246376811
+Tiempo de ejecución: 0.84375
 
     \end{Verbatim}
 
     \section{CONCLUSIONES}\label{conclusiones}
 
+    Para finalizar realizaremos una gráfica con el porcentaje de validación
+y el tiempo de ejecución que se ha empleado para entrenar al modelo.
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{plotConclusion}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,} \PY{n}{score}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}76}]:} \PY{k}{def} \PY{n+nf}{plotConclusion}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,} \PY{n}{score}\PY{p}{)}\PY{p}{:}
              \PY{n}{grupos} \PY{o}{=} \PY{l+m+mi}{3}
              \PY{n}{means\PYZus{}time} \PY{o}{=} \PY{n}{tiempo}
              \PY{n}{means\PYZus{}score} \PY{o}{=} \PY{n}{score}
@@ -1940,17 +2013,20 @@ Tiempo de ejecución: 40.953125
              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}154}]:} \PY{n}{t} \PY{o}{=} \PY{p}{(}\PY{n}{timeRegresion}\PY{p}{,} \PY{n}{timeRN}\PY{p}{,} \PY{n}{timeSVM}\PY{p}{)}
-          \PY{n}{s} \PY{o}{=} \PY{p}{(}\PY{n}{scoreRegresion}\PY{p}{,} \PY{n}{scoreRN}\PY{p}{,} \PY{n}{scoreSVM}\PY{p}{)}
-\end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}155}]:} \PY{n}{plotConclusion}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{s}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}77}]:} \PY{n}{t} \PY{o}{=} \PY{p}{(}\PY{n}{timeRegresion}\PY{p}{,} \PY{n}{timeRN}\PY{p}{,} \PY{n}{timeSVM}\PY{p}{)}
+         \PY{n}{s} \PY{o}{=} \PY{p}{(}\PY{n}{scoreRegresion}\PY{p}{,} \PY{n}{scoreRN}\PY{p}{,} \PY{n}{scoreSVM}\PY{p}{)}
 \end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{n}{plotConclusion}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_154_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_155_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1958,24 +2034,24 @@ Tiempo de ejecución: 40.953125
 similar, por lo que en este caso la elección del modelo no afectará
 tanto al score sino al tiempo de entrenamiento.
 
-Dado que la Regresión Logística es tremendamente rápida y no requiere
-ejecutarse multiples veces en búsqueda del mejor porcentaje, su tiempo
-de ejecución es mínimo (menos de 1 segundo), la Red Neuronal, debido a
-que necesita ejecutarse repetidas veces para obtener el mejor resultado,
-tiene un coste de tiempo elevado y la SVM por su parte es lenta a pesar
-de ejecutarse una única vez debido a la gran cantidad de operaciones que
-realiza para el entrenamiento.
+Las conclusiones que podemos sacar respecto del tiempo de ejecución es
+que la Regresión es tremendamente rápida, con un tiempo de ejecución
+menor de 1 segundo. La Red Neuronal es bastante lenta, debido a la gran
+cantidad de operaciones que realiza para el entrenamiento. Y la SVM es
+bastante rápida también, aunque no tanto como la regresión. Además, la
+rapidez de la SVM va a depender sobre todo del parametro C utilizado,
+siendo más rápida cuanto menor sea este parámetro y ofreciendonos unos
+resultados de manera no muy estable, ya que el mejor parámetro C
+dependerá de la configuración de los datos de entrenamiento.
 
 Por tanto, si queremos un entrenamiento rápido la mejor opción será la
 Regresión Logística, pero si deseamos un buen rendimiento será mejor
 usar la Red Neuronal, dado que nos permite ajustar más parámetros y
-funciona con datasets más complejos.
+funciona aún mejor con datasets más complejos.
 
-Por su parte la SVM no sería recomendable en ningún caso dado que no
-ofrece un mejor resultado y el tiempo de ejecución es demasiado alto,
-con poca diferencia respecto a una Red Neuronal bien entrenada, lo que a
-su vez también dificulta realizar pruebas para buscar un mejor
-porcentaje.
+Por su parte la SVM no sería muy recomendable dado que ofrece un
+resultado medio y el tiempo de ejecución es bastante inestable por lo ya
+explicado.
 
     \section{BIBLIOGRAFÍA}\label{bibliografuxeda}
 
