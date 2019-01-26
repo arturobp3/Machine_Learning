@@ -5,8 +5,11 @@ Projects that has been developed in the Machine Learning and Big Data university
 
 
 # Proyecto Final
-(Aquí irá una explicación, un link al proyecto y archivos utilizados)
+Análisis realizado sobre un dataset que contiene datos sobre clientes que han solicitado un crédito bancario. Se han utilizado modelos de clasificación para determinar si el cliente en cuestión va a recibir el crédito o no, en base a las características de cada uno.
+Los datos de cada persona han sido sustituidos por símbolos para proteger la confidencialidad de estos.
 
+* [Análisis en PDF](https://github.com/arturobp3/Machine_Learning/blob/master/Proyecto/Credit%20Approval.pdf)
+* [Código realizado en Jupyter](https://github.com/arturobp3/Machine_Learning/blob/master/Proyecto/Credit%20Approval.ipynb)
 
 # Prácticas Realizadas
 
